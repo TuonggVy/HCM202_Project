@@ -1,5 +1,73 @@
 import './style.css'
 import './game.css'
+import { 
+    ClipboardList, 
+    Target, 
+    Settings, 
+    Building2, 
+    Briefcase, 
+    Palette, 
+    Handshake,
+    Key,
+    Shield,
+    Gamepad2,
+    TrendingUp,
+    Scale,
+    Dumbbell
+} from 'lucide'
+
+import { createElement } from 'lucide'
+
+// Helper function to create Lucide icon SVG as HTML string
+function createIconHTML(iconData, size = 24, color = 'currentColor', strokeWidth = 2) {
+    try {
+        // Create SVG element using lucide's createElement
+        const svgElement = createElement(iconData)
+        
+        if (svgElement) {
+            // Set attributes on the SVG
+            svgElement.setAttribute('width', size.toString())
+            svgElement.setAttribute('height', size.toString())
+            svgElement.setAttribute('viewBox', '0 0 24 24')
+            svgElement.setAttribute('fill', 'none')
+            svgElement.setAttribute('stroke', color)
+            svgElement.setAttribute('stroke-width', strokeWidth.toString())
+            svgElement.setAttribute('stroke-linecap', 'round')
+            svgElement.setAttribute('stroke-linejoin', 'round')
+            
+            return svgElement.outerHTML
+        }
+        
+        return ''
+    } catch (e) {
+        console.error('Error creating icon:', e)
+        return ''
+    }
+}
+
+// Helper function to get icon HTML by name
+function getIconHTML(iconName, size = 24, color = 'currentColor') {
+    const icons = {
+        'clipboard': ClipboardList,
+        'target': Target,
+        'settings': Settings,
+        'building': Building2,
+        'briefcase': Briefcase,
+        'palette': Palette,
+        'handshake': Handshake,
+        'key': Key,
+        'shield': Shield,
+        'gamepad': Gamepad2,
+        'trending-up': TrendingUp,
+        'scale': Scale,
+        'dumbbell': Dumbbell
+    }
+    
+    const Icon = icons[iconName]
+    if (!Icon) return ''
+    
+    return createIconHTML(Icon, size, color)
+}
 
 // Render HTML content
 const app = document.getElementById('app')
@@ -31,17 +99,17 @@ app.innerHTML = `
             <!-- Summary Cards -->
             <div class="summary-grid">
                 <div class="summary-card">
-                    <div class="summary-icon">📋</div>
+                    <div class="summary-icon">${getIconHTML('clipboard', 32)}</div>
                     <h3>Tính chất</h3>
                     <p>Thời kỳ cải biến sâu sắc, phức tạp, lâu dài, khó khăn và gian khổ. Đây là quá trình biến đổi xã hội cũ thành xã hội mới hoàn toàn chưa từng có trong lịch sử dân tộc.</p>
                 </div>
                 <div class="summary-card">
-                    <div class="summary-icon">🎯</div>
+                    <div class="summary-icon">${getIconHTML('target', 32)}</div>
                     <h3>Đặc điểm</h3>
                     <p>Từ nước nông nghiệp lạc hậu tiến thẳng lên chủ nghĩa xã hội, <strong>không trải qua giai đoạn phát triển tư bản chủ nghĩa</strong>.</p>
                 </div>
                 <div class="summary-card">
-                    <div class="summary-icon">⚙️</div>
+                    <div class="summary-icon">${getIconHTML('settings', 32)}</div>
                     <h3>Nhiệm vụ</h3>
                     <p>Đấu tranh cải tạo, xóa bỏ tàn tích xã hội cũ, xây dựng các yếu tố mới trên tất cả các lĩnh vực: chính trị, kinh tế, văn hóa và quan hệ xã hội.</p>
                 </div>
@@ -52,19 +120,19 @@ app.innerHTML = `
                 <h3 class="card-title">Nhiệm vụ trên các lĩnh vực</h3>
                 <div class="task-grid">
                     <div class="task-item">
-                        <h4>🏛️ Chính trị</h4>
+                        <h4>${getIconHTML('building', 20)} Chính trị</h4>
                         <p>Xây dựng chế độ dân chủ, chống chủ nghĩa cá nhân, bồi dưỡng nhân dân có tri thức và năng lực làm chủ.</p>
                     </div>
                     <div class="task-item">
-                        <h4>💼 Kinh tế</h4>
+                        <h4>${getIconHTML('briefcase', 20)} Kinh tế</h4>
                         <p>Cải tạo nền kinh tế cũ, xây dựng nền kinh tế mới với công nghiệp và nông nghiệp hiện đại, gắn với quyền làm chủ của nhân dân.</p>
                     </div>
                     <div class="task-item">
-                        <h4>🎨 Văn hóa</h4>
+                        <h4>${getIconHTML('palette', 20)} Văn hóa</h4>
                         <p>Tẩy trừ di tích thuộc địa, phát triển truyền thống tốt đẹp, hấp thu văn hóa tiến bộ thế giới, xây dựng nền văn hóa dân tộc, khoa học và đại chúng.</p>
                     </div>
                     <div class="task-item">
-                        <h4>🤝 Quan hệ xã hội</h4>
+                        <h4>${getIconHTML('handshake', 20)} Quan hệ xã hội</h4>
                         <p>Xây dựng xã hội dân chủ, công bằng, văn minh, tôn trọng con người, hài hòa giữa lợi ích cá nhân và tập thể.</p>
                     </div>
                 </div>
@@ -134,14 +202,14 @@ app.innerHTML = `
 
             <div class="relationship-grid">
                 <div class="relationship-card">
-                    <div class="relationship-icon">🔑</div>
+                    <div class="relationship-icon">${getIconHTML('key', 32)}</div>
                     <h3>Độc lập dân tộc</h3>
                     <p class="relationship-subtitle">Cơ sở, tiền đề</p>
                     <p>Giải phóng dân tộc, giành độc lập là mục tiêu đầu tiên, tạo cơ sở và tiền đề cho chủ nghĩa xã hội. Độc lập dân tộc gắn liền với tự do, cơm no, áo ấm, hạnh phúc cho nhân dân.</p>
                 </div>
                 <div class="relationship-arrow">⇄</div>
                 <div class="relationship-card">
-                    <div class="relationship-icon">🛡️</div>
+                    <div class="relationship-icon">${getIconHTML('shield', 32)}</div>
                     <h3>Chủ nghĩa xã hội</h3>
                     <p class="relationship-subtitle">Điều kiện bảo đảm</p>
                     <p>Chế độ dân chủ do nhân dân làm chủ, xã hội bình đẳng, công bằng, kinh tế phát triển cao, đảm bảo nền độc lập dân tộc vững chắc và trường tồn.</p>
@@ -185,22 +253,22 @@ app.innerHTML = `
 
             <div class="application-grid">
                 <div class="application-card">
-                    <div class="application-icon">🎯</div>
+                    <div class="application-icon">${getIconHTML('target', 32)}</div>
                     <h3>Kiên định mục tiêu</h3>
                     <p>Nắm vững ngọn cờ độc lập dân tộc và chủ nghĩa xã hội – ngọn cờ quang vinh mà Chủ tịch Hồ Chí Minh đã trao lại.</p>
                 </div>
                 <div class="application-card">
-                    <div class="application-icon">💪</div>
+                    <div class="application-icon">${getIconHTML('trending-up', 32)}</div>
                     <h3>Phát huy dân chủ</h3>
                     <p>Phát huy sức mạnh dân chủ xã hội chủ nghĩa theo phương châm "dân biết, dân bàn, dân làm, dân kiểm tra".</p>
                 </div>
                 <div class="application-card">
-                    <div class="application-icon">⚖️</div>
+                    <div class="application-icon">${getIconHTML('scale', 32)}</div>
                     <h3>Củng cố hệ thống</h3>
                     <p>Củng cố, kiện toàn hệ thống chính trị, phát huy sức mạnh và hiệu quả hoạt động, đảm bảo quyền làm chủ của nhân dân.</p>
                 </div>
                 <div class="application-card">
-                    <div class="application-icon">🛡️</div>
+                    <div class="application-icon">${getIconHTML('shield', 32)}</div>
                     <h3>Đấu tranh chống suy thoái</h3>
                     <p>Tăng cường xây dựng, chỉnh đốn Đảng; ngăn chặn, đẩy lùi suy thoái về tư tưởng chính trị, đạo đức, lối sống.</p>
                 </div>
@@ -215,7 +283,7 @@ app.innerHTML = `
     <!-- Game Section -->
     <section class="game-section" id="game-section">
         <div class="section-header">
-            <div class="section-number">🎮</div>
+            <div class="section-number">${getIconHTML('gamepad', 24)}</div>
             <h2 class="section-title">Game: Thu Thập Mảnh Ghép</h2>
         </div>
         <div class="game-intro">

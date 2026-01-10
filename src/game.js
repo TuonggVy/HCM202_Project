@@ -2,6 +2,36 @@
 // 12 mảnh = 1 bức tranh hoàn chỉnh
 // 1 mảnh = 5 câu hỏi đúng
 
+import { createElement } from 'lucide'
+import { Lock, Gamepad2, PartyPopper, Frown, RotateCcw } from 'lucide'
+
+// Helper function to create Lucide icon SVG as HTML string
+function createIconHTML(iconData, size = 24, color = 'currentColor', strokeWidth = 2) {
+    try {
+        // Create SVG element using lucide's createElement
+        const svgElement = createElement(iconData)
+        
+        if (svgElement) {
+            // Set attributes on the SVG
+            svgElement.setAttribute('width', size.toString())
+            svgElement.setAttribute('height', size.toString())
+            svgElement.setAttribute('viewBox', '0 0 24 24')
+            svgElement.setAttribute('fill', 'none')
+            svgElement.setAttribute('stroke', color)
+            svgElement.setAttribute('stroke-width', strokeWidth.toString())
+            svgElement.setAttribute('stroke-linecap', 'round')
+            svgElement.setAttribute('stroke-linejoin', 'round')
+            
+            return svgElement.outerHTML
+        }
+        
+        return ''
+    } catch (e) {
+        console.error('Error creating icon:', e)
+        return ''
+    }
+}
+
 // Câu hỏi về Tư tưởng Hồ Chí Minh
 const questions = [
     {
@@ -849,7 +879,7 @@ function renderGame() {
 
     gameContainer.innerHTML = `
         <div class="game-header">
-            <h2>🎮 Game: Thu Thập Mảnh Ghép</h2>
+            <h2>${createIconHTML(Gamepad2, 24)} Game: Thu Thập Mảnh Ghép</h2>
             <div class="game-progress">
                 <div class="progress-info">
                     <span>Mảnh: ${pieceNumber}/12</span>
@@ -897,7 +927,7 @@ ${Array.from({ length: 12 }, (_, i) => {
                 ` : ''}
             "
         >
-            ${!collected ? `<span class="piece-number">🔒</span>` : ''}
+            ${!collected ? `<span class="piece-number">${createIconHTML(Lock, 24)}</span>` : ''}
         </div>
     `
 }).join('')}
@@ -934,9 +964,9 @@ function checkAnswer(question, selectedIndex) {
     if (isCorrect) {
         gameState.correctAnswers++
         gameState.totalCorrect++
-        showFeedback('Đúng rồi! 🎉', 'success')
+        showFeedback(`Đúng rồi! ${createIconHTML(PartyPopper, 20)}`, 'success')
     } else {
-        showFeedback('Sai rồi! 😔', 'error')
+        showFeedback(`Sai rồi! ${createIconHTML(Frown, 20)}`, 'error')
     }
 
     saveGameState()
@@ -983,7 +1013,7 @@ function showCompletePuzzle() {
     const gameContainer = document.getElementById('game-container')
     gameContainer.innerHTML = `
         <div class="game-complete">
-            <h2>🎉 Chúc Mừng! 🎉</h2>
+            <h2>${createIconHTML(PartyPopper, 32)} Chúc Mừng! ${createIconHTML(PartyPopper, 32)}</h2>
             <p>Bạn đã thu thập đủ 12 mảnh ghép!</p>
             <div class="puzzle-complete">
                 <img src="/HoChiMinh5.jpeg" alt="Bức tranh hoàn chỉnh" class="complete-image">
@@ -993,7 +1023,7 @@ function showCompletePuzzle() {
                 <p>Số câu đúng: ${gameState.totalCorrect}</p>
                 <p>Tỷ lệ đúng: ${gameState.totalQuestions > 0 ? Math.round((gameState.totalCorrect / gameState.totalQuestions) * 100) : 0}%</p>
             </div>
-            <button class="reset-game-btn" onclick="resetGame()">Chơi lại</button>
+            <button class="reset-game-btn" onclick="resetGame()">${createIconHTML(RotateCcw, 18)} Chơi lại</button>
         </div>
     `
 }
