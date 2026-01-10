@@ -1,0 +1,17 @@
+{
+  "name": "ho-chi-minh-landing",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  },
+  "dependencies": {
+    "@ant-design/icons": "^6.1.0",
+    "lucide-react": "^0.562.0"
+  }
+}
