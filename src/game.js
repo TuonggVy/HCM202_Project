@@ -964,22 +964,27 @@ function checkAnswer(question, selectedIndex) {
     if (isCorrect) {
         gameState.correctAnswers++
         gameState.totalCorrect++
-        showFeedback(`Đúng rồi! ${createIconHTML(PartyPopper, 20)}`, 'success')
+        showFeedback('Đúng rồi!', 'success')
+        saveGameState()
+
+        // Next question after delay
+        setTimeout(() => {
+            if (gameState.correctAnswers >= 5) {
+                collectPiece(gameState.currentPiece)
+            } else {
+                gameState.currentQuestionIndex++
+                renderGame()
+            }
+        }, 2000)
     } else {
-        showFeedback(`Sai rồi! ${createIconHTML(Frown, 20)}`, 'error')
-    }
+        showFeedback('Sai rồi!', 'error')
+        saveGameState()
 
-    saveGameState()
-
-    // Next question after delay
-    setTimeout(() => {
-        if (gameState.correctAnswers >= 5) {
-            collectPiece(gameState.currentPiece)
-        } else {
-            gameState.currentQuestionIndex++
+        // Stay on the same question, let user try again
+        setTimeout(() => {
             renderGame()
-        }
-    }, 2000)
+        }, 2000)
+    }
 }
 
 // Collect piece
@@ -1013,7 +1018,6 @@ function showCompletePuzzle() {
     const gameContainer = document.getElementById('game-container')
     gameContainer.innerHTML = `
         <div class="game-complete">
-            <h2>${createIconHTML(PartyPopper, 32)} Chúc Mừng! ${createIconHTML(PartyPopper, 32)}</h2>
             <p>Bạn đã thu thập đủ 12 mảnh ghép!</p>
             <div class="puzzle-complete">
                 <img src="/HoChiMinh5.jpeg" alt="Bức tranh hoàn chỉnh" class="complete-image">
